@@ -1,0 +1,16 @@
+# 统一行尾，避免跨平台 clone 后把 Windows 批处理改成 LF 直接失效。
+# （.bat 是 LF 时 cmd 会在多行 if 块上静默退出，这是本项目踩过的坑）
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制文件禁止任何转换
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.bmp  binary
+*.ico  binary
+*.icns binary
+*.npy  binary
+*.pth  binary
+*.pt   binary

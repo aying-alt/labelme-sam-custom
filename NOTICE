@@ -1,0 +1,161 @@
+NOTICE
+======
+
+labelme-with-segment-anything · 个人定制版
+This is a modified version of labelme. Modifications since 2026-10.
+
+
+1. 本项目与上游
+----------------
+
+本仓库是与下列项目**均无隶属关系**的第三方修改版，未获其背书：
+
+  labelme
+    Copyright (C) 2016-2018 Kentaro Wada
+    Copyright (C) 2011 Michael Pitidis, Hussein Abdulwahid
+    https://github.com/wkentaro/labelme
+    License: GPL-3.0-or-later
+
+    Labelme is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Labelme is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Labelme.  If not, see <http://www.gnu.org/licenses/>.
+
+    The above copyright notice and licence notice are reproduced here
+    verbatim from the upstream project, as required by GPL-3.0 section 5(b).
+    The full licence text is in the LICENSE file, which deliberately contains
+    nothing but the GPL-3.0 text so that GitHub recognises the licence.
+
+  labelme-with-segment-anything
+    https://github.com/fry404006308/labelme-with-segment-anything
+    License: GPL-3.0-or-later
+
+本仓库基于上述项目修改，修改部分同样以 GPL-3.0-or-later 发布。
+完整许可正文见 LICENSE。原版权声明予以保留，未作删改。
+
+
+2. 修改说明（GPL-3.0 §5(a)）
+------------------------------
+
+修改起始日期：2026-10
+修改内容摘要：修复取消命名崩溃、多边形边缘精度、顶点疏密控制、找图顺序四类问题；
+             模型由 SAM 更换为 HQ-SAM 并支持三档切换；新增权重自动下载与依赖自检。
+逐文件对照见 README.md「与原版的差异」一节，逐次改动见 git log。
+
+未收录的上游开发期实验备份（与功能无关）：
+  labelme/shape_1.0.py
+  labelme/shape_RETR_EXTERNAL.py
+  labelme/shape_RETR_LIST.py
+  labelme/widgets/canvas_1.0.py
+  labelme/widgets/canvas_broken.py
+除此之外未删除上游任何功能实现。
+
+
+3. 示例数据
+------------
+
+**本仓库不包含任何第三方数据集的数据。** 上游仓库 `examples/` 下曾带有若干来自公开数据集的
+样例，为避免再分发时的授权争议，本仓库已将其全部移除——共 104 个文件：
+
+  * 68 个 `.jpg`     —— VOC / APC2016 图像与文档截图
+  * 14 个 `.png`     —— VOC 分割掩膜
+  * 3 个 `.png`      —— 教程输出示例
+  * 2 个 `.gif`      —— 演示动画
+  * 14 个 `.npy`     —— 由 VOC 掩膜转换的分割标签数组
+  * 3 个 `.xml`      —— VOC 官方 Annotation 文件
+
+`examples/` 下保留 `.json`（labelme 格式标注样例）、`.txt`（类别名词表）、`.md`、`.py`，
+均为格式参考与脚本，不含第三方数据。
+
+`labelme/icons/` 下的 31 个界面图标是程序运行所必需，予以保留（见第 4 节）。
+
+被移除图片的原始来源，供需要者自行从上游或官方渠道获取：
+
+  * `2011_*.jpg`  —— PASCAL VOC 2011（http://host.robots.ox.ac.uk/pascal/VOC/）
+  * `2007_*.jpg`  —— PASCAL VOC 2007（同上）
+  * `apc2016_obj3.jpg` —— Amazon Picking Challenge 2016
+  * `000001*.jpg` —— 视频帧示例
+  * `.readme/*.jpg` —— 上游作者制作的软件文档截图，其中画面含上述公开数据集图像
+
+上述图片著作权归各原始权利人，本项目不对其主张任何权利，也不再分发。
+
+`tests/labelme_tests/data/` 目录被 `.gitignore` 排除，其中的测试样例图与内嵌 base64 的
+测试夹具同样**不在仓库内**，不会随本仓库分发。
+
+
+4. 图标
+--------
+
+labelme/icons/ 下的图标资源来自上游仓库，风格源自 GNOME 桌面图标主题。
+其中 delete.png 的文件元数据标注作者为 Andreas Nilsson（http://www.andreasn.se），
+其余图标未在文件内标注作者。
+
+各图标的原始授权请以其所属图标项目（GNOME Icon Theme / Tango）为准；
+本项目未对这些图标主张任何权利，也未对其授权状态作出额外保证。
+
+
+5. 模型权重
+------------
+
+仓库内**不含**任何模型权重文件（*.pth）。
+
+  HQ-SAM（sam_hq_vit_b/l/h.pth）
+    发布方：SysCV / sam-hq（https://github.com/SysCV/sam-hq）
+    托管：HuggingFace lkeab/hq-sam
+    许可：Apache-2.0
+
+权重由程序在首次使用 SAM 功能时自动下载到本机缓存目录，不随本仓库分发。
+若你手动下载并再分发权重，请遵守 Apache-2.0 的署名与声明要求。
+
+
+6. 运行依赖
+------------
+
+以下依赖不随本仓库分发，由 pip 从 PyPI 安装，各自遵循其原有许可：
+
+  PyQt5                     GPL-3.0 / 商业双许可（Riverbank）
+  torch, torchvision        BSD-3-Clause
+  segment-anything          Apache-2.0
+  segment-anything-hq       Apache-2.0
+  numpy                     BSD-3-Clause
+  opencv-python             Apache-2.0
+  natsort                   MIT
+  imgviz                    MIT
+  appdirs                   MIT
+  termcolor                 MIT
+  qtpy                      MIT
+  matplotlib                PSF-based（matplotlib license）
+  colorama                  BSD-3-Clause
+
+注意：PyQt5 采用 GPL-3.0 与商业许可双重授权。以 GPL-3.0 开源方式分发本项目无需付费；
+若闭源商业分发，须自行向 Riverbank 取得 PyQt5 商业许可。
+
+
+7. 引用
+--------
+
+若在学术工作中使用本项目，请引用其上游：
+
+  @misc{wada2020labelme,
+    title  = {labelme: Image Polygonal Annotation with Python},
+    author = {Wada, Kentaro},
+    year   = {2016},
+    doi    = {10.5281/zenodo.5711226},
+    url    = {https://github.com/wkentaro/labelme}
+  }
+
+  @inproceedings{ke2023samhq,
+    title     = {Segment Anything in High Quality},
+    author    = {Ke, Lei and Ye, Mingqiao and Danelljan, Martin and Liu, Yifan
+                 and Tai, Yu-Wing and Tang, Chi-Keung and Yu, Fisher},
+    booktitle = {NeurIPS},
+    year      = {2023}
+  }

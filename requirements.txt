@@ -1,0 +1,37 @@
+# Runtime dependencies (Windows / Linux / macOS)
+#
+# Install:
+#     python -m pip install -r requirements.txt
+#
+# ENCODING NOTE: this file is deliberately pure ASCII. On Chinese Windows, pip
+# reads requirement files using the system locale (GBK) unless a UTF-8 BOM is
+# present, so any non-ASCII character here aborts the install with:
+#     UnicodeDecodeError: 'gbk' codec can't decode byte ...
+# Keep every comment in this file ASCII-only. (Tested: reproduced on a zh-CN
+# Windows machine, pip fails before downloading anything.)
+#
+# torch: if you have no GPU, or want the CPU-only build, install it first with
+#     pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# The lines below will then see it as already satisfied.
+
+PyQt5!=5.15.3,!=5.15.4
+qtpy
+imgviz>=0.11
+matplotlib
+natsort>=7.1.0
+numpy
+Pillow>=2.8
+PyYAML
+termcolor
+appdirs
+opencv-python-headless
+torch>=1.7
+torchvision>=0.8
+
+# HQ-SAM: provides the segment_anything module.
+# This fork loads HQ weights, so the HQ build is required (not the original).
+# Repo: https://github.com/SysCV/sam-hq
+segment-anything-hq
+
+# Colored logs on Windows
+colorama; sys_platform == "win32"

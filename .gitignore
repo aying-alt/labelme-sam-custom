@@ -1,0 +1,38 @@
+/.cache/
+/.pytest_cache/
+
+/build/
+/dist/
+/*.egg-info/
+
+*.py[cdo]
+__pycache__/
+
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ===== 以下为本地定制新增 =====
+# 模型权重（体积大，且其许可与代码不同，不随仓库分发）
+models/
+*.pth
+*.pt
+*.onnx
+
+# 虚拟环境（避免把整个解释器仓库推上去）
+venv/
+.venv/
+env/
+ENV/
+*venv*/
+
+# 标注数据与输出（严禁上传任何业务数据）
+# 说明：不整类忽略图片格式，否则会误伤 labelme/icons 与上游测试数据；
+#      上传前请自查是否混入了业务图片或标注 json。
+data/
+output/
+
+# 本机解释器路径与专用启动脚本（含绝对路径，不上传）
+python_path.txt
+run_local.bat
